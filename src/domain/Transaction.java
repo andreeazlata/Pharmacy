@@ -47,13 +47,13 @@ public class Transaction extends domain.Entity {
 
     @Override
     public String toString() {
-        return "Tranzactie{" +
+        return "Transaction{" +
                 "id='" + id + '\'' +
-                ", idMedicament='" + medicineId + '\'' +
-                ", nrCrdClient=" + clientCard +
-                ", nrBucati=" + numberOfItems +
-                ", data=" + date +
-                ", ora=" + time +
+                ", medicineId='" + medicineId + '\'' +
+                ", clientCard=" + clientCard +
+                ", numberOfItems=" + numberOfItems +
+                ", date=" + date +
+                ", time=" + time +
                 '}';
     }
 }
