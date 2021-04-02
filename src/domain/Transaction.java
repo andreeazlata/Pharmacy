@@ -1,31 +1,22 @@
 package domain;
 
-import java.sql.Time;
-import java.util.Date;
-
 public class Transaction extends domain.Entity {
-        private String id;
-        private String medicineId;
+        private int medicineId;
         private int clientCard;
         private int numberOfItems;
-        private Date date;
-        private Time time;
+        private String dateAndHour;
 
-    public Transaction(int idEntity, String id, String medicineId, int clientCard, int numberOfItems, Date date, Time time) {
+
+    public Transaction(int idEntity, int medicineId, int clientCard, int numberOfItems, String dateAndHour) {
         super(idEntity);
-        this.id = id;
         this.medicineId = medicineId;
         this.clientCard = clientCard;
         this.numberOfItems = numberOfItems;
-        this.date = date;
-        this.time = time;
+        this.dateAndHour = dateAndHour;
+
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getMedicineId() {
+    public int getMedicineId() {
         return medicineId;
     }
 
@@ -37,23 +28,17 @@ public class Transaction extends domain.Entity {
         return numberOfItems;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public Time getTime() {
-        return time;
+    public String getDateAndHour() {
+        return dateAndHour;
     }
 
     @Override
     public String toString() {
         return "Transaction{" +
-                "id='" + id + '\'' +
-                ", medicineId='" + medicineId + '\'' +
+                "medicineId='" + medicineId + '\'' +
                 ", clientCard=" + clientCard +
                 ", numberOfItems=" + numberOfItems +
-                ", date=" + date +
-                ", time=" + time +
+                ", dateAndHour='" + dateAndHour + '\'' +
                 '}';
     }
 }
