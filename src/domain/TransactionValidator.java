@@ -17,9 +17,9 @@ public class TransactionValidator {
         if (givenMedicine.getNumberOfitems() < transaction.getNumberOfItems()) {
             throw new Exception("Cannot add transaction unless number of items for transaction <= number of items in stock");
         }
-        if(transaction.getClientCard()!=(int)transaction.getClientCard()){
-            throw new Exception("Client card number is not an integer");
-        }
+//        if(transaction.getClientCard()){
+//            throw new Exception("Client card number is not an integer");
+//        }
         }
     }
 

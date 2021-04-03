@@ -30,9 +30,8 @@ public class Console {
         System.out.println("5. Show all the medicine");
         System.out.println("6. Show all the transactions");
         System.out.println("7. Add transaction");
-//        System.out.println("5. Delete all the transactions in a given interval of days");
-//        System.out.println("6. List client cards by number of purchases");
-        System.out.println("a. List client cards by number of purchases");
+//        System.out.println("8. Delete all the transactions in a given interval of days");
+//        System.out.println("9. List client cards by number of purchases");
         System.out.println("x. Exit");
     }
 
@@ -40,7 +39,7 @@ public class Console {
         label:
         while (true) {
             this.showMenu();
-            System.out.println("Alegeti o optiune:");
+            System.out.println("Choose an option:");
             String option = scanner.next();
             switch (option) {
                 case "1":
@@ -84,13 +83,13 @@ public class Console {
             System.out.println("Write the price:");
             float price = scanner.nextFloat();
             System.out.println("Needs prescriptions?");
-            boolean needsPrescription = true;
+            boolean needsPrescription = Boolean.parseBoolean(scanner.next());
             System.out.println("Write the number of items available:");
             int numberOfitems = scanner.nextInt();
             this.serviceMedicine.addMedicine(idMedicine, medicineName, manufacturer, price, needsPrescription, numberOfitems);
             System.out.println("Medicine adding successful");
         } catch (Exception exception) {
-            System.out.println("Au aparut erorile:");
+            System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
         }
 
@@ -103,7 +102,7 @@ public class Console {
             this.serviceMedicine.delete(idMedicine);
             System.out.println("Medicine removal was successful");
         } catch (Exception exception) {
-            System.out.println("Au aparut erorile:");
+            System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
         }
 
@@ -122,9 +121,10 @@ public class Console {
             System.out.println("Write the date and hour: ");
             String dateAndHour = scanner.next();
             this.serviceTransaction.addTransaction(idTransaction, idMedicine, clientCard, numberOfItems,dateAndHour);
+//            this.serviceMedicine.updateMedicine(idMedicine,numberOfItems);
             System.out.println("Transaction added successfully");
         } catch (Exception exception) {
-            System.out.println("Au aparut erorile:");
+            System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
         }
 

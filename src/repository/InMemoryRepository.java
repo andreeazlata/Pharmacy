@@ -47,11 +47,12 @@ public class InMemoryRepository<T extends Entity> implements repository.IReposit
     @Override
     public void update(T entity) throws repository.RepositoryException {
         if (!this.storage.containsKey(entity.getIdEntity())) {
-            throw new RepositoryException("There is no cookie with the given id to update!");
+            throw new RepositoryException("There is no entity with the given id to update!");
         }
 
         this.storage.put(entity.getIdEntity(), entity);
     }
+
 
     /**
      * Deletes an entity with a given id.

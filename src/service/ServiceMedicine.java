@@ -42,6 +42,7 @@ public class ServiceMedicine {
         this.medicineRepository.update(medicine);
     }
 
+
     public void delete(int idMedicine) throws RepositoryException {
         this.medicineRepository.delete(idMedicine);
 
