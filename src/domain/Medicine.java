@@ -40,7 +40,8 @@ public class Medicine extends Entity {
     @Override
     public String toString() {
         return "Medicine{" +
-                "name='" + name + '\'' +
+                "id= " + getIdEntity()+'\''+
+                ", name='" + name + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", price=" + price +
                 ", needsPrescription=" + needsPrescription +

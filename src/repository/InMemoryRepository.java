@@ -23,7 +23,7 @@ public class InMemoryRepository<T extends Entity> implements repository.IReposit
         this.storage.put(entity.getIdEntity(), entity);
     }
 
-    /**
+    /** Gets a entity with a given id.
      * @param id the id
      * @return the entity with the given id, or null if none exists
      */
@@ -32,7 +32,7 @@ public class InMemoryRepository<T extends Entity> implements repository.IReposit
         return this.storage.get(id);
     }
 
-    /**
+    /** Returns all entity.
      * @return all entity.
      */
     @Override
@@ -40,7 +40,7 @@ public class InMemoryRepository<T extends Entity> implements repository.IReposit
         return new ArrayList<>(this.storage.values());
     }
 
-    /**
+    /** Updates a given entity by its id.
      * @param entity the given entity.
      * @throws repository.RepositoryException if the entity id does not exist.
      */

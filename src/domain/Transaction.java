@@ -1,6 +1,6 @@
 package domain;
 
-public class Transaction extends domain.Entity {
+public class Transaction extends Entity {
         private int medicineId;
         private int clientCard;
         private int numberOfItems;
@@ -35,7 +35,8 @@ public class Transaction extends domain.Entity {
     @Override
     public String toString() {
         return "Transaction{" +
-                "medicineId='" + medicineId + '\'' +
+                "id= " + getIdEntity()+'\''+
+                ", medicineId='" + medicineId + '\'' +
                 ", clientCard=" + clientCard +
                 ", numberOfItems=" + numberOfItems +
                 ", dateAndHour='" + dateAndHour + '\'' +

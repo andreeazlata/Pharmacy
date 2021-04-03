@@ -20,11 +20,11 @@ public class ServiceTransaction {
 
     /**
      * creates a transaction
-     * @param idEntity
-     * @param medicineId
-     * @param clientCard
-     * @param numberOfItems
-     * @param dateAndHour
+     * @param idEntity the id of the entity
+     * @param medicineId the id of the medicine
+     * @param clientCard the client card number
+     * @param numberOfItems the number of items
+     * @param dateAndHour the date and hour
      * @throws Exception
      */
     public void addTransaction(int idEntity, int medicineId, int clientCard, int numberOfItems, String dateAndHour) throws Exception {
@@ -35,11 +35,11 @@ public class ServiceTransaction {
 
     /**
      * updates a transaction.
-     * @param idEntity
-     * @param medicineId
-     * @param clientCard
-     * @param numberOfItems
-     * @param dateAndHour
+     * @param idEntity the id of the entity
+     * @param medicineId the id of the medicine
+     * @param clientCard the client card number
+     * @param numberOfItems the number of items
+     * @param dateAndHour the date and hour
      * @throws Exception
      */
     public void updateTransaction(int idEntity, int medicineId, int clientCard, int numberOfItems, String dateAndHour) throws Exception {
@@ -53,9 +53,8 @@ public class ServiceTransaction {
      * @param idEntity
      */
     public void deleteTransaction(int idEntity){
-
+        this.repositoryTransaction.delete(idEntity);
     }
-
     /**
      *
      * @return a list of all the transactions

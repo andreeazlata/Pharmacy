@@ -33,13 +33,12 @@ class InMemoryRepositoryTest {
         // assert
         assertEquals(2, inMemoryRepository.read().size(), "Dupa adaugarea a 2 medicamente, read().size() != 2!");
 
-        // TODO: see assertThrows()
         try {
             // act
             inMemoryRepository.create(medicine3);
 
             // assert
-            fail("Adaugarea unei prajituri cu id existent nu da exceptie!");
+            fail("Adaugarea unui medicament cu id existent nu da exceptie!");
         } catch (RepositoryException ex) {
 
             // assert
@@ -55,8 +54,8 @@ class InMemoryRepositoryTest {
                 medicines.add(medicine);
             }
 
-            for (Medicine prajitura : medicines) {
-                inMemoryRepository.create(prajitura);
+            for (Medicine medicine : medicines) {
+                inMemoryRepository.create(medicine);
             }
 
             for (int i = 0; i < 20; ++i) {

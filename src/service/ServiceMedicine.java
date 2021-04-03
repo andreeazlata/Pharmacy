@@ -23,18 +23,20 @@ public class ServiceMedicine {
 
     /**
      * @param idEntity
-     * @param name
-     * @param manufacturer
-     * @param price
-     * @param needsPrescription
-     * @param numberOfitems
-     * @throws RepositoryException
+     * @param name medicine name
+     * @param manufacturer name of the manufacturer
+     * @param price the price of the medicine
+     * @param needsPrescription if the medicine needs prescription or not
+     * @param numberOfitems the number of medicine to be added
+     * @throws RepositoryException if the price is not >0
      */
     public void addMedicine(int idEntity, String name, String manufacturer, float price, boolean needsPrescription, int numberOfitems) throws RepositoryException {
         Medicine medicine = new Medicine(idEntity, name, manufacturer, price, needsPrescription, numberOfitems);
-        if (price > 0) {
-            this.medicineRepository.create(medicine);
+        if (price<= 0) {
+            throw new RepositoryException("Price needs to be positive and bigger than 0");
         }
+        else
+            this.medicineRepository.create(medicine);
     }
 
     public void updateMedicine(int idEntity, String name, String manufacturer, float price, boolean needsPrescription, int numberOfitems) throws RepositoryException {
@@ -48,8 +50,17 @@ public class ServiceMedicine {
 
     }
 
+    public List<Medicine> getMedicinesCheaperThan(float maxPrice){
+        List<Medicine> medicines = new ArrayList<>();
+        for(Medicine medicine: this.medicineRepository.read()){
+            if(medicine.getPrice()<maxPrice){
+                medicines.add(medicine);
+            }
+        }
+        return medicines;
+    }
     /**
-     * @return list of medicine sorted by number of purchases
+     * @return list of medicine sorted by number of purchases, decreasing
      */
     public List<MedicineWithNumberOfPurchases> getMedicineOrderedByNumberOfPurchases() {
         Map<Integer, Integer> medicineWithNumberOfPurchases = new HashMap<>();
@@ -73,6 +84,10 @@ public class ServiceMedicine {
         return results;
     }
 
+    /**
+     *
+     * @return list of client cards in decreasing order based on the number of purchases
+     */
     public  List<ClientCardsWithNumberOfPurchases> getClientCardsOrderedByNumberOfPurchases() {
         Map<Integer, Integer> clientCardsWithNumberOfPurchases = new HashMap<>();
         for (Transaction t : this.transactionsRepository.read()) {

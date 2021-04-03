@@ -7,6 +7,7 @@ import domain.Transaction;
 import service.ServiceMedicine;
 import service.ServiceTransaction;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Console {
@@ -30,8 +31,8 @@ public class Console {
         System.out.println("5. Show all the medicine");
         System.out.println("6. Show all the transactions");
         System.out.println("7. Add transaction");
+        System.out.println("8. Medicines cheaper than max");
 //        System.out.println("8. Delete all the transactions in a given interval of days");
-//        System.out.println("9. List client cards by number of purchases");
         System.out.println("x. Exit");
     }
 
@@ -63,6 +64,9 @@ public class Console {
                 case "7":
                     this.handleAddTransaction();
                     break;
+                    case "8":
+                    this.handleAddTransaction();
+                    break;
                 case "x":
                     break label;
                 default:
@@ -87,7 +91,6 @@ public class Console {
             System.out.println("Write the number of items available:");
             int numberOfitems = scanner.nextInt();
             this.serviceMedicine.addMedicine(idMedicine, medicineName, manufacturer, price, needsPrescription, numberOfitems);
-            System.out.println("Medicine adding successful");
         } catch (Exception exception) {
             System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
@@ -95,12 +98,24 @@ public class Console {
 
     }
 
+
+    private void handleCheaperThanMax(){
+        try{
+            System.out.println("Write the max price: ");
+            float maxPrice=scanner.nextFloat();
+            List<Medicine> medicines= this.serviceMedicine.getMedicinesCheaperThan(maxPrice);
+            System.out.println(medicines);
+        }
+        catch (Exception exception) {
+            System.out.println("You have the following errors:");
+            System.out.println(exception.getMessage());
+        }
+    }
     private void handleRemoveMedicine() {
         try {
             System.out.println("Write the id of the medicine: ");
             int idMedicine = scanner.nextInt();
             this.serviceMedicine.delete(idMedicine);
-            System.out.println("Medicine removal was successful");
         } catch (Exception exception) {
             System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
@@ -122,7 +137,6 @@ public class Console {
             String dateAndHour = scanner.next();
             this.serviceTransaction.addTransaction(idTransaction, idMedicine, clientCard, numberOfItems,dateAndHour);
 //            this.serviceMedicine.updateMedicine(idMedicine,numberOfItems);
-            System.out.println("Transaction added successfully");
         } catch (Exception exception) {
             System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
