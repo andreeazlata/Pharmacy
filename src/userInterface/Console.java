@@ -24,15 +24,15 @@ public class Console {
     private void showMenu() {
         System.out.println("1. Add medicine");
         System.out.println("2. Remove medicine");
-//        System.out.println("3. Search for medicine and transactions");
-//        System.out.println("2. Show all transactions in a given interval");
-        System.out.println("3. List medicines by number of sales");
-        System.out.println("4. List client cards by number of purchases");
-        System.out.println("5. Show all the medicine");
-        System.out.println("6. Show all the transactions");
-        System.out.println("7. Add transaction");
-        System.out.println("8. Medicines cheaper than max");
-//        System.out.println("8. Delete all the transactions in a given interval of days");
+        System.out.println("3. Update medicine");
+        System.out.println("4. Add transaction");
+        System.out.println("5. Remove transaction");
+        System.out.println("6. Update transaction");
+        System.out.println("7. Show all the medicine");
+        System.out.println("8. Show all the transactions");
+        System.out.println("9. List medicines by number of sales");
+        System.out.println("10. List client cards by number of purchases");
+        System.out.println("11. Medicines cheaper than max");
         System.out.println("x. Exit");
     }
 
@@ -50,22 +50,31 @@ public class Console {
                     this.handleRemoveMedicine();
                     break;
                 case "3":
-                    this.handleMadicineWithNumberOfPurchases();
+                    this.handleUpdateMedicine();
                     break;
                 case "4":
-                    this.handleClientCardsWithNumberOfPurchases();
+                    this.handleAddTransaction();
                     break;
                 case "5":
-                    this.handleShowAllMedicine();
+                    this.handleRemoveTransaction();
                     break;
                 case "6":
-                    this.handleShowAllTransactions();
+                    this.handleUpdateTransaction();
                     break;
                 case "7":
-                    this.handleAddTransaction();
+                    this.handleShowAllMedicine();
                     break;
-                    case "8":
-                    this.handleAddTransaction();
+                case "8":
+                    this.handleShowAllTransactions();
+                    break;
+                case "9":
+                    this.handleMadicineWithNumberOfPurchases();
+                    break;
+                case "10":
+                    this.handleClientCardsWithNumberOfPurchases();
+                    break;
+                case "11":
+                    this.handleCheaperThanMax();
                     break;
                 case "x":
                     break label;
@@ -98,19 +107,29 @@ public class Console {
 
     }
 
-
-    private void handleCheaperThanMax(){
-        try{
-            System.out.println("Write the max price: ");
-            float maxPrice=scanner.nextFloat();
-            List<Medicine> medicines= this.serviceMedicine.getMedicinesCheaperThan(maxPrice);
-            System.out.println(medicines);
-        }
-        catch (Exception exception) {
+    private void handleUpdateMedicine() {
+        try {
+            System.out.println("Write the id of the medicine you want to update: ");
+            int idMedicine = scanner.nextInt();
+            System.out.println("Write the name of the medicine: ");
+            String medicineName = scanner.next();
+            System.out.println("Write the manufacturer of the medicine: ");
+            String manufacturer = scanner.next();
+            System.out.println("Write the price:");
+            float price = scanner.nextFloat();
+            System.out.println("Needs prescriptions?");
+            boolean needsPrescription = Boolean.parseBoolean(scanner.next());
+            System.out.println("Write the number of items available:");
+            int numberOfitems = scanner.nextInt();
+            this.serviceMedicine.updateMedicine(idMedicine, medicineName, manufacturer, price, needsPrescription, numberOfitems);
+        } catch (Exception exception) {
             System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
         }
+
     }
+
+
     private void handleRemoveMedicine() {
         try {
             System.out.println("Write the id of the medicine: ");
@@ -122,6 +141,8 @@ public class Console {
         }
 
     }
+
+
 
     private void handleAddTransaction() {
         try {
@@ -144,6 +165,50 @@ public class Console {
 
     }
 
+    private void handleUpdateTransaction() {
+        try {
+            System.out.println("Write the id of the transaction you want to update: ");
+            int idTransaction=  scanner.nextInt();
+            System.out.println("Write the id of the medicine: ");
+            int idMedicine = scanner.nextInt();
+            System.out.println("Write the client card number: ");
+            int clientCard = scanner.nextInt();
+            System.out.println("Write the number of items: ");
+            int numberOfItems = scanner.nextInt();
+            System.out.println("Write the date and hour: ");
+            String dateAndHour = scanner.next();
+            this.serviceTransaction.updateTransaction(idTransaction, idMedicine, clientCard, numberOfItems,dateAndHour);
+        } catch (Exception exception) {
+            System.out.println("You have the following errors:");
+            System.out.println(exception.getMessage());
+        }
+
+    }
+
+    private void handleRemoveTransaction() {
+        try {
+            System.out.println("Write the id of the transaction: ");
+            int idTransaction = scanner.nextInt();
+            this.serviceTransaction.deleteTransaction(idTransaction);
+        } catch (Exception exception) {
+            System.out.println("You have the following errors:");
+            System.out.println(exception.getMessage());
+        }
+
+    }
+
+    private void handleCheaperThanMax(){
+        try{
+            System.out.println("Write the max price: ");
+            float maxPrice=scanner.nextFloat();
+            List<Medicine> medicines= this.serviceMedicine.getMedicinesCheaperThan(maxPrice);
+            System.out.println(medicines);
+        }
+        catch (Exception exception) {
+            System.out.println("You have the following errors:");
+            System.out.println(exception.getMessage());
+        }
+    }
     private void handleMadicineWithNumberOfPurchases() {
         for (MedicineWithNumberOfPurchases medicineWithNumberOfPurchases : this.serviceMedicine.getMedicineOrderedByNumberOfPurchases()) {
             System.out.println(medicineWithNumberOfPurchases);
