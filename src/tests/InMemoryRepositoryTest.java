@@ -14,34 +14,29 @@ class InMemoryRepositoryTest {
 
     @org.junit.jupiter.api.Test
     void createShouldValidateTheIdAndAddTheObject() throws Exception {
-        // setup (arrange)
         IRepository<Medicine> inMemoryRepository = new InMemoryRepository<>();
         Medicine medicine1 = new Medicine(1, "aaa", "aa1", 21, true, 89);
         Medicine medicine2 = new Medicine(2, "bbb", "aa1", 25, false, 25);
         Medicine medicine3 = new Medicine(1, "ccc", "aa1", 76, true, 69);
 
-        // act
+
         inMemoryRepository.create(medicine1);
 
-        // assert
+
         assertEquals(1, inMemoryRepository.read().size(), "Dupa adaugarea unui medicament, read().size() != 1!");
         assertEquals(medicine1.getIdEntity(), inMemoryRepository.read().get(0).getIdEntity());
 
-        // act
+
         inMemoryRepository.create(medicine2);
 
-        // assert
         assertEquals(2, inMemoryRepository.read().size(), "Dupa adaugarea a 2 medicamente, read().size() != 2!");
 
         try {
-            // act
+
             inMemoryRepository.create(medicine3);
 
-            // assert
-            fail("Adaugarea unui medicament cu id existent nu da exceptie!");
         } catch (RepositoryException ex) {
 
-            // assert
             assertEquals(2, inMemoryRepository.read().size(), "S-a adaugat un medicament cu id existent!");
         }
     }
@@ -96,7 +91,17 @@ class InMemoryRepositoryTest {
 
 
     @org.junit.jupiter.api.Test
-    void update() {
+    void updateShouldValidateTheIdAndUpdateTheObject() {
+        IRepository<Medicine> inMemoryRepository = new InMemoryRepository<>();
+        Medicine medicine1 = new Medicine(1, "aaa", "aa1", 21, true, 89);
+        Medicine medicine2 = new Medicine(8, "aaa", "aa1", 21, true, 89);
+        inMemoryRepository.create(medicine1);
+        try {
+            inMemoryRepository.update(medicine2);
+            fail("Inexistent id doesn't throw");
+        } catch (Exception exception) {
+            assertEquals("There is no entity with the given id to update!", exception.getMessage());
+        }
     }
 
 }

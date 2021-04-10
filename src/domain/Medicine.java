@@ -37,6 +37,10 @@ public class Medicine extends Entity {
         return numberOfitems;
     }
 
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +

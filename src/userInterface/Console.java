@@ -201,14 +201,30 @@ public class Console {
         try{
             System.out.println("Write the max price: ");
             float maxPrice=scanner.nextFloat();
-            List<Medicine> medicines= this.serviceMedicine.getMedicinesCheaperThan(maxPrice);
-            System.out.println(medicines);
+            for (Medicine medicines : this.serviceMedicine.getMedicinesCheaperThan(maxPrice)) {
+                System.out.println(medicines);
+            }
         }
         catch (Exception exception) {
             System.out.println("You have the following errors:");
             System.out.println(exception.getMessage());
         }
     }
+//    private void handlePriceRise(){
+//        try{
+//            System.out.println("Write the max price: ");
+//            float maxPrice=scanner.nextFloat();
+//            System.out.println("Write the percent for price rise: ");
+//            int percent=scanner.nextInt();
+//            for (Medicine medicines : this.serviceMedicine.priceRiseMedicinesCheaperThan(maxPrice,percent)) {
+//                System.out.println(medicines);
+//            }
+//       }
+//        catch (Exception exception) {
+//            System.out.println("You have the following errors:");
+//            System.out.println(exception.getMessage());
+//        }
+//    }
     private void handleMadicineWithNumberOfPurchases() {
         for (MedicineWithNumberOfPurchases medicineWithNumberOfPurchases : this.serviceMedicine.getMedicineOrderedByNumberOfPurchases()) {
             System.out.println(medicineWithNumberOfPurchases);

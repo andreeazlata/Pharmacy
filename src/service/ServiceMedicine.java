@@ -1,9 +1,6 @@
 package service;
 
-import domain.ClientCardsWithNumberOfPurchases;
-import domain.Medicine;
-import domain.MedicineWithNumberOfPurchases;
-import domain.Transaction;
+import domain.*;
 import repository.IRepository;
 import repository.RepositoryException;
 
@@ -13,34 +10,33 @@ public class ServiceMedicine {
 
     private final IRepository<Medicine> medicineRepository;
     private final IRepository<Transaction> transactionsRepository;
+    private final MedicineValidator medicineValidator;
 
-    public ServiceMedicine(IRepository<Medicine> medicineRepository, IRepository<Transaction> transactionIRepository) {
+    public ServiceMedicine(IRepository<Medicine> medicineRepository, IRepository<Transaction> transactionIRepository, MedicineValidator medicineValidator) {
         this.medicineRepository = medicineRepository;
         this.transactionsRepository = transactionIRepository;
+        this.medicineValidator = medicineValidator;
     }
-
 
 
     /**
      * @param idEntity
-     * @param name medicine name
-     * @param manufacturer name of the manufacturer
-     * @param price the price of the medicine
+     * @param name              medicine name
+     * @param manufacturer      name of the manufacturer
+     * @param price             the price of the medicine
      * @param needsPrescription if the medicine needs prescription or not
-     * @param numberOfitems the number of medicine to be added
+     * @param numberOfitems     the number of medicine to be added
      * @throws RepositoryException if the price is not >0
      */
-    public void addMedicine(int idEntity, String name, String manufacturer, float price, boolean needsPrescription, int numberOfitems) throws RepositoryException {
+    public void addMedicine(int idEntity, String name, String manufacturer, float price, boolean needsPrescription, int numberOfitems) throws Exception {
         Medicine medicine = new Medicine(idEntity, name, manufacturer, price, needsPrescription, numberOfitems);
-        if (price<= 0) {
-            throw new RepositoryException("Price needs to be positive and bigger than 0");
-        }
-        else
-            this.medicineRepository.create(medicine);
+        this.medicineValidator.validate(medicine);
+        this.medicineRepository.create(medicine);
     }
 
-    public void updateMedicine(int idEntity, String name, String manufacturer, float price, boolean needsPrescription, int numberOfitems) throws RepositoryException {
+    public void updateMedicine(int idEntity, String name, String manufacturer, float price, boolean needsPrescription, int numberOfitems) throws Exception {
         Medicine medicine = new Medicine(idEntity, name, manufacturer, price, needsPrescription, numberOfitems);
+        this.medicineValidator.validate(medicine);
         this.medicineRepository.update(medicine);
     }
 
@@ -50,15 +46,28 @@ public class ServiceMedicine {
 
     }
 
-    public List<Medicine> getMedicinesCheaperThan(float maxPrice){
+    public List<Medicine> getMedicinesCheaperThan(float maxPrice) {
         List<Medicine> medicines = new ArrayList<>();
-        for(Medicine medicine: this.medicineRepository.read()){
-            if(medicine.getPrice()<maxPrice){
+        for (Medicine medicine : this.medicineRepository.read()) {
+            if (medicine.getPrice() < maxPrice) {
                 medicines.add(medicine);
             }
         }
         return medicines;
     }
+
+
+//    public void priceRiseMedicinesCheaperThan(float maxPrice, int percent) {
+//
+//        for (Medicine medicine : this.medicineRepository.read()) {
+//            if (medicine.getPrice() < maxPrice) {
+//                medicine.setPrice(medicine.getPrice() * percent / 100);
+//
+//            }
+//        }
+//    }
+
+
     /**
      * @return list of medicine sorted by number of purchases, decreasing
      */
@@ -85,10 +94,9 @@ public class ServiceMedicine {
     }
 
     /**
-     *
      * @return list of client cards in decreasing order based on the number of purchases
      */
-    public  List<ClientCardsWithNumberOfPurchases> getClientCardsOrderedByNumberOfPurchases() {
+    public List<ClientCardsWithNumberOfPurchases> getClientCardsOrderedByNumberOfPurchases() {
         Map<Integer, Integer> clientCardsWithNumberOfPurchases = new HashMap<>();
         for (Transaction t : this.transactionsRepository.read()) {
             int clientCard = t.getClientCard();
